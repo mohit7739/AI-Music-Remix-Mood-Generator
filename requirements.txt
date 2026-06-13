@@ -1,0 +1,11 @@
+streamlit
+librosa
+pydub
+numpy
+pandas
+matplotlib
+plotly
+scikit-learn
+huggingface_hub
+soundfile
+scipy
