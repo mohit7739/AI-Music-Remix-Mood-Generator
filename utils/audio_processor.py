@@ -57,10 +57,14 @@ def apply_speed_change(audio, speed=1.0):
 
 def apply_bass_boost(audio, gain_dB=5):
     """Applies a simple bass boost."""
-    # We can do a low shelf filter using pydub's low_pass_filter
-    bass = audio.low_pass_filter(150)
-    boosted_bass = bass + gain_dB
-    return audio.overlay(boosted_bass)
+    try:
+        from pydub.scipy_effects import low_pass_filter
+        bass = low_pass_filter(audio, 150)
+        boosted_bass = bass + gain_dB
+        return audio.overlay(boosted_bass)
+    except Exception as e:
+        # Fallback if scipy_effects fails or is not available
+        return audio + (gain_dB / 2.0)
 
 def export_audio(audio, format="mp3"):
     """Exports pydub audio to bytes."""
